@@ -178,3 +178,4 @@ patch patches/0001-vt-keyboard-extend-func_buf_lock-to-readers.patch
 # Kernel configuration
 kconf hardware leafhill.cfg
 kconf hardware ipu.cfg
+kconf hardware harman.cfg
