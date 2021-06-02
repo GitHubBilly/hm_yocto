@@ -24,26 +24,6 @@ See the [Setting up Guide](https://github.com/intel/iotg-yocto-bsp-public/wiki/S
 
 ## Getting Started with Yocto BSP for Intel Atom E3900 SoC
 - Make sure you have setup SSH connection to GitHub for recipe to pull Linux kernel.
-- Download this Yocto BSP from GitHub via SSH or HTTPS to your host machine.
-   <br> - HTTPS directly from https://github.com/intel/iotg-yocto-bsp-public.git by selecting the appropriate branch/release version, e.g. e3900/master, from the top left menu; or
-   <br> - SSH using following command (release_version, e.g. e3900/master)
-```
-      git clone https://github.com/intel/iotg-yocto-bsp-public.git -b e3900/master
-```
-- This git tree will maintained as single product branch. In order to get code base from previous release, you need to checkout to the specific tag.
-
-   <br> - For Intel Atom E3900 Maintenance Release Version 4:
-```
-      git checkout MR4-B-02
-```
-   <br> - For Intel Atom E3900 Maintenance Release Version 5:
-```
-      git checkout MR5-B-04
-```
-- After checking out one of the release tags, you will noticed that you are in 'detached HEAD' state. You can now create a local git branch to host the code.
-```
-      git checkout -b <branch_name>
-```
 - Execute the setup.sh script to check your host machine settings, download Poky and other meta layers from Yocto Project and prepare your environment for build.
 
 **NOTE: Do not interrupt the setup.sh execution especially during local repository initialization**
