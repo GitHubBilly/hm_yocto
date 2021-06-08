@@ -180,4 +180,3 @@ patch patches/0001-drivers-net-ethernet-microchip-lan743x_main.patch
 # Kernel configuration
 kconf hardware leafhill.cfg
 kconf hardware ipu.cfg
-kconf hardware harman.cfg
