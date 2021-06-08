@@ -174,6 +174,8 @@ patch patches/0001-perf-core-Fix-a-memory-leak-in-perf_event_parse_addr.patch
 # CVE-2020-25656
 patch patches/0001-vt-keyboard-simplify-vt_kdgkbsent.patch
 patch patches/0001-vt-keyboard-extend-func_buf_lock-to-readers.patch
+# HARMAN-2021-0608
+patch patches/0001-drivers-net-ethernet-microchip-lan743x_main.patch
 
 # Kernel configuration
 kconf hardware leafhill.cfg

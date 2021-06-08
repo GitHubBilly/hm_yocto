@@ -1,0 +1,37 @@
+--- a/drivers/net/ethernet/microchip/lan743x_main.c	2021-06-08 08:43:20.503932998 +0000
++++ b/drivers/net/ethernet/microchip/lan743x_main.c	2021-06-08 08:34:16.786395183 +0000
+@@ -15,6 +15,8 @@
+ #include "lan743x_main.h"
+ #include "lan743x_ethtool.h"
+ 
++const char DEBUGTAG[] = "<bbb>";
++
+ static void lan743x_pci_cleanup(struct lan743x_adapter *adapter)
+ {
+ 	pci_release_selected_regions(adapter->pdev,
+@@ -985,17 +987,25 @@
+ 	int ret = -EIO;
+ 	u32 mii_adv;
+ 
++	printk("%s lan743x_phy_open start\n", DEBUGTAG);
++
+ 	netdev = adapter->netdev;
+ 	phydev = phy_find_first(adapter->mdiobus);
++	printk("%s phy_find_first, phydev %d\n", DEBUGTAG, phydev);
+ 	if (!phydev)
+ 		goto return_error;
+ 
+ 	ret = phy_connect_direct(netdev, phydev,
+ 				 lan743x_phy_link_status_change,
+ 				 PHY_INTERFACE_MODE_GMII);
++	printk("%s phy_connect_direct, ret %d\n", DEBUGTAG, ret);
+ 	if (ret)
+ 		goto return_error;
+ 
++	// specify mdio.addr = 5 (port 6 of 9897)
++	phydev->mdio.addr = 5;
++	printk("%s [%d] specify mdio.addr %d -> %d\n", DEBUGTAG, __LINE__, phydev->mdio.addr, 5);
++
+ 	/* MAC doesn't support 1000T Half */
+ 	phydev->supported &= ~SUPPORTED_1000baseT_Half;
+ 
