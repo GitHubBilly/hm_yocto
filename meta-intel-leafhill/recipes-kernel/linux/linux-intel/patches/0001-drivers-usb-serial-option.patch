@@ -1,0 +1,79 @@
+--- a/drivers/usb/serial/option.c	2021-07-06 19:18:09.402392122 +0000
++++ b/drivers/usb/serial/option.c	2021-07-06 19:18:09.362392787 +0000
+@@ -558,6 +558,9 @@
+ #define WETELECOM_PRODUCT_6802			0x6802
+ #define WETELECOM_PRODUCT_WMD300		0x6803
+ 
++/* Vendor and product IDs */
++#define NODECOM_VENDOR_ID			0x1508
++#define FIBOCOM_VENDOR_ID			0x2CB7
+ 
+ /* Device flags */
+ 
+@@ -575,6 +578,38 @@
+ 
+ 
+ static const struct usb_device_id option_ids[] = {
++// Fibcom begin
++	{ USB_DEVICE(FIBOCOM_VENDOR_ID, 0x0104) },
++	{ USB_DEVICE(FIBOCOM_VENDOR_ID, 0x0105) },
++	{ USB_DEVICE(FIBOCOM_VENDOR_ID, 0x0106) },
++	{ USB_DEVICE(FIBOCOM_VENDOR_ID, 0x0107) },
++	{ USB_DEVICE(FIBOCOM_VENDOR_ID, 0x0108) },
++	{ USB_DEVICE(FIBOCOM_VENDOR_ID, 0x0109) },
++	{ USB_DEVICE(FIBOCOM_VENDOR_ID, 0x010A) },
++	{ USB_DEVICE(FIBOCOM_VENDOR_ID, 0x010B) },
++	{ USB_DEVICE(NODECOM_VENDOR_ID, 0x1000) },
++	{ USB_DEVICE(NODECOM_VENDOR_ID, 0x1001) },
++	{ USB_DEVICE(NODECOM_VENDOR_ID, 0x0110) },
++	{ USB_DEVICE(NODECOM_VENDOR_ID, 0x0111) },
++	{ USB_DEVICE(NODECOM_VENDOR_ID, 0x0111) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0X9025) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x90DB) },
++	{ USB_DEVICE(0x2C7C, 0x0306) },
++	// FIBOCOM DUMP
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x0104) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x0105) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x0106) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x0107) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x0108) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x0109) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x010A) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x010B) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x900E) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x0110) },
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x0111) },
++	// FIBOCOM DOWNLOAD
++	{ USB_DEVICE(QUALCOMM_VENDOR_ID, 0x9008) },
++// Fibocom end
+ 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_COLT) },
+ 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA) },
+ 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA_LIGHT) },
+@@ -2095,6 +2130,27 @@
+ 				&serial->interface->cur_altsetting->desc;
+ 	unsigned long device_flags = id->driver_info;
+ 
++	if(serial->dev->descriptor.idVendor == FIBOCOM_VENDOR_ID && 
++	(((serial->dev->descriptor.idProduct == cpu_to_le16(0x0104) || 
++	serial->dev->descriptor.idProduct == cpu_to_le16(0x0105)) && 
++	serial->interface->cur_altsetting->desc.bInterfaceNumber >= 4)|| 
++	((serial->dev->descriptor.idProduct == cpu_to_le16(0x0109) || 
++	serial->dev->descriptor.idProduct == cpu_to_le16(0x010A)) && 
++	serial->interface->cur_altsetting->desc.bInterfaceNumber >= 2))) 
++	{ 
++		printk(KERN_INFO "Discovery the interface for Fibocom ."); 
++		return -ENODEV; 
++	} 
++
++	if(serial->dev->descriptor.idVendor == FIBOCOM_VENDOR_ID && 
++		(serial->dev->descriptor.idProduct == cpu_to_le16(0x0110) || 
++		serial->dev->descriptor.idProduct == cpu_to_le16(0x0111)) && 
++		serial->interface->cur_altsetting->desc.bInterfaceNumber < 2) 
++	{ 
++		printk(KERN_INFO "Discovery the interface for Fibocom ."); 
++		return -ENODEV; 
++	} 
++
+ 	/* Never bind to the CD-Rom emulation interface	*/
+ 	if (iface_desc->bInterfaceClass == USB_CLASS_MASS_STORAGE)
+ 		return -ENODEV;

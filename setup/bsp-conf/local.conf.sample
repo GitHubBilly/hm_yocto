@@ -148,6 +148,9 @@ ALLOW_EMPTY_opencl-headers_pn-opencl-headers = "1"
 # Install open source media driver
 IMAGE_INSTALL_append = " gmmlib intel-mediasdk intel-media-driver"
 
+# Install FM150 5G driver
+IMAGE_INSTALL_append = " gobinet-mod"
+
 # Take note that as we are building 3rd party ingredient.
 # We need the LICENSE_FLAGS below.
 LICENSE_FLAGS_WHITELIST += "commercial"
