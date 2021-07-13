@@ -151,6 +151,9 @@ IMAGE_INSTALL_append = " gmmlib intel-mediasdk intel-media-driver"
 # Install FM150 5G driver
 IMAGE_INSTALL_append = " gobinet-mod"
 
+# Install WNFB-265AX(BT) driver
+IMAGE_INSTALL_append = " bcmdhd-mod"
+
 # Take note that as we are building 3rd party ingredient.
 # We need the LICENSE_FLAGS below.
 LICENSE_FLAGS_WHITELIST += "commercial"
