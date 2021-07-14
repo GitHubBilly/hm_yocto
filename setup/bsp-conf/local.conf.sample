@@ -154,6 +154,8 @@ IMAGE_INSTALL_append = " gobinet-mod"
 # Install WNFB-265AX(BT) driver
 IMAGE_INSTALL_append = " bcmdhd-mod"
 
+IMAGE_INSTALL_append = " run_script"
+
 # Take note that as we are building 3rd party ingredient.
 # We need the LICENSE_FLAGS below.
 LICENSE_FLAGS_WHITELIST += "commercial"
